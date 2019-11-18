@@ -1,0 +1,28 @@
+{
+  "name": "vault server",
+  "description": "deploy a dev vault server to heroku",
+  "repository": "https://github.com/acuityinnovations/vault-button",
+  "keywords": ["vault", "server"],
+  "buildpacks": [
+    {
+      "url": "https://github.com/acuityinnovations/vault-buildpack"
+    }
+  ],
+  "addons": [
+    {
+      "plan": "heroku-postgresql",
+      "options": {
+        "version": "9.5"
+      }
+    }
+  ],
+  "scripts": {
+    "postdeploy": "psql ${DATABASE_URL} -q -f vault-kv.sql"
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "hobby"
+    }
+  }
+}
